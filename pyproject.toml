@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "k8s-tutorial-milvus"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pymilvus = {version = "^2.4.0", extras = ["model"]}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
