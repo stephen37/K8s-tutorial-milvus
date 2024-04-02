@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 pymilvus = {version = "^2.4.0", extras = ["model"]}
+ruff = "^0.3.5"
 
 
 [build-system]
