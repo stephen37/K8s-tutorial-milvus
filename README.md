@@ -1,22 +1,32 @@
-# Milvus Vector Database Example
+# Getting started with Milvus cluster and K8s
 
-This project demonstrates the basic usage of the [Milvus](https://github.com/milvus-io/milvus) vector database using the `pymilvus` Python client. It includes creating a collection, inserting data, conducting a similarity search, and finally dropping the collection.
+## Introduction
+[Milvus](https://github.com/milvus-io/milvus) is a distributed vector database that aims to store, index and manage massive embedding vectors. Its ability to efficiently index and search through trillions of vectors makes Milvus a go-to choice for AI and machine learning workloads.
 
-## Getting Started
-To run this example, you'll need to have Milvus running locally or accessible via a network connection. Additionally, ensure you have Python installed along with `pymilvus` library.
+Kubernetes (K8s), on the other hand, excels in managing and scaling containerized applications. It provides features like auto-scaling, self-healing, and load balancing, which are crucial for maintaining high availability and performance in production environments.
 
-### Prerequisites
-Install the necessary Python libraries with `poetry install`, also you will need Milvus running locally or on accessible via a network connection.
+## Prerequisites
+* Docker - Ensure Docker is installed on your system.
+* Kubernetes - Have a Kubernetes cluster ready. You can use minikube for local development or a cloud provider's Kubernetes service for production environments. For this tutorial, I will use [k3d](https://k3d.io/v5.6.3/)
+* Helm - Install Helm, a package manager for Kubernetes, to help you manage Kubernetes applications, you can check our documentation to see how to do that https://milvus.io/docs/install_cluster-helm.md
+* Kubectl - Install kubectl, a command-line tool for interacting with Kubernetes clusters, to deploy applications, inspect and manage cluster resources, and view logs.
 
-### Running the Example
-1. Start by cloning this repository to your local machine.
-1. Navigate to the directory containing the cloned repository.
-1. Run the script using Python: `python getting_started.py` 
+### Nice to have
+* [K9s](https://k9scli.io/) - Terminal based UI to interact with your Kubernetes clusters. It makes it easier to navigate, observe and manage your deployed applications in the wild.
+
+## Setting up K8s
+* Create your cluster with: `k3d cluster start`
+* Check the status of your K8s cluster: `kubectl cluster-info` 
 
 
-## What Does the Script Do?
-- Creating a Collection and Schema: Initializes a collection named quick_setup with a specified dimension.
-- Inserting Data: Inserts a predefined set of vector data along with color labels into the quick_setup collection.
-- Inserting Generated Data: Adds randomly generated vector data to the collection to simulate a larger dataset.
-- Conducting a Similarity Search: Executes a similarity search on the collection using a query vector to find the top 3 similar vectors.
-- Dropping the Collection: Cleans up by dropping the quick_setup collection from the Milvus database.
+## Deploying Milvus on K8s
+1. Get the Helm values: `helm show values milvus/milvus > milvus_helm.yaml`
+1. Install Milvus on your cluster: `helm upgrade --install --values milvus_helm.yaml milvus milvus/milvus --namespace milvus --create-namespace`
+1. Port forward the Milvus proxy to your laptop: `kubectl port-forward svc/my-milvus 19530:19530`
+
+## Insert Data in your Milvus Cluster
+Check out the [Jupyter Notebook](getting_started.ipynb) showing you how to insert data in your cluster.
+
+--- 
+Feel free to check out [Milvus](https://github.com/milvus-io/milvus), and share your experiences with the community by joining our [Discord](https://discord.gg/FG6hMJStWu).
+
